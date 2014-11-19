@@ -9,13 +9,6 @@ class Protobuf250 < Formula
 
   option :universal
 
-  fails_with :llvm do
-    build 2334
-  end
-
-  # make it build with clang and libc++
-  patch :DATA
-
   def install
     # Don't build in debug mode. See:
     # https://github.com/mxcl/homebrew/issues/9279
@@ -38,15 +31,3 @@ class Protobuf250 < Formula
     EOS
   end
 end
-__END__
-diff --git a/src/google/protobuf/message.cc b/src/google/protobuf/message.cc
-index 91e6878..0409a94 100644
---- a/src/google/protobuf/message.cc
-+++ b/src/google/protobuf/message.cc
-@@ -32,6 +32,7 @@
- //  Based on original Protocol Buffers design by
- //  Sanjay Ghemawat, Jeff Dean, and others.
-
-+#include <istream>
- #include <stack>
- #include <google/protobuf/stubs/hash.h>
